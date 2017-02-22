@@ -11,7 +11,14 @@
 						<%= pluralize(@request.user.requests.count, "Request") if @request.user.requests %>
 					</small>
 				</li>
-				<li><strong>Approving Officer: <%= @request.officer.user.empname %></strong></li>
+				<li>
+					<strong>
+						Approving Officer: 
+						<%@current_officer.each do |officer|%>
+	                		<%= officer.empname %>
+	        			<%end%>
+              		</strong>
+              	</li>
 			</div>
 		</div>
 	</ul>

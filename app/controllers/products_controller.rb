@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:name, :type_id)
+    params.require(:product).permit(:name, :type_id, :unit_id)
   end
 
   def require_admin

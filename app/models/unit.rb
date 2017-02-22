@@ -1,4 +1,5 @@
 class Unit < ApplicationRecord
+	has_many :products, dependent: :destroy
 	has_many :request_lines, dependent: :destroy
 	has_many :consolidate_lines, dependent: :destroy
 	has_many :order_lines, dependent: :destroy

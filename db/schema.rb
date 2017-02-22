@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 20170221072341) do
   create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string  "name"
     t.integer "type_id"
+    t.integer "unit_id"
   end
 
   create_table "receive_lines", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

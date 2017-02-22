@@ -3,6 +3,7 @@ class Product < ActiveRecord::Migration[5.0]
   	create_table :products do |t|
     	t.string :name
     	t.integer :type_id
+    	t.integer :unit_id
     end
   end
 end

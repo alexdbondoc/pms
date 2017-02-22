@@ -18,20 +18,17 @@
 					</td>
 				</tr>
 				<tr>
-					<td></td>
-					<td colspan="2"><center><strong>Requestor Info</strong></center></td>
-					<td colspan="2"><center><strong>Aproving Officer Info</strong></center></td>
-					<td></td>
+					<td colspan="3"><center><strong>Requestor Info</strong></center></td>
+					<td colspan="3"><center><strong>Aproving Officer Info</strong></center></td>
 				</tr>
 				<tr>
-					<td></td>
-					<td colspan="2"> 
+					<td colspan="3"> 
 						<center>
 							<%= f.label current_user.empname %>
 							<%= f.hidden_field(:user_id, value: current_user.id) %>
 						</center> 
 					</td>
-					<td colspan="2">
+					<td colspan="3">
 						<% @current_officer.each do |co| %>
 							<center><%= f.label co.empname %>
 								<%= f.hidden_field(:officer_id, value: co.id) %>
@@ -42,23 +39,20 @@
 				</tr>
 
 				<tr>
-					<td></td>
-  					<td colspan="2"> 
+  					<td colspan="3"> 
   						<center>
   							<%= f.label current_user.designation.name %>
   						</center> 
   					</td>
-  					<td colspan="2"> 
+  					<td colspan="3"> 
 						<% @current_officer.each do |co| %>
 							<center><%= f.label co.designation.name %></center>
 						<%end%>
   					</td>
-					<td></td>
 				</tr>
 
 				<tr>
-					<td></td>
-  					<td colspan="2"> 
+  					<td colspan="3"> 
   						<center>
   							<%= f.label current_user.department.name %>
 							<%= f.hidden_field(:department_id, value: current_user.department_id) %>
@@ -66,19 +60,19 @@
 							<% time = Time.now %>
 							<%= f.hidden_field(:date_created, value: time.to_formatted_s(:db)) %>
   						</center>
-  					</td colspan="2">
-  					<td> 
+  					</td>
+  					<td colspan="3"> 
 						<% @current_officer.each do |co| %>
 							<center><%= f.label co.department.name %></center>
 						<%end%>
   					</td>
-					<td></td>
 				</tr>
 				<tr>
 					<th><center>Equipment Type</center></th>
 					<th colspan="2"><center>Equipment Name</center></th>
 					<th><center>Quantity</center></th>
 					<th><center>Unit</center></th>
+					<th></th>
 				</tr>
 	  		</thead>
 	  		<tbody>
@@ -92,9 +86,9 @@
 						</center> 
 							<%= rl.hidden_field(:type_id)%>
 					</td>
-					<td colspan="3"> 
+					<td colspan="2"> 
 						<center>
-						<%= select_tag "product[#{i}]", "<option>Please Select</option>".html_safe, class: :product %>
+							<%= select_tag "product[#{i}]", "<option>Please Select</option>".html_safe, class: :product %>
 							<%= rl.hidden_field(:product_id)%>
 						</center> 
 					</td>
@@ -112,6 +106,7 @@
 							<%= rl.hidden_field(:unit_id)%>
 						</center> 
 					</td>
+					<td></td>
 				</tr>
 			<%end%>
 			<%i +=1%>

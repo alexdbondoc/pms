@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
 	belongs_to :type
+	belongs_to :unit
 	has_many :request_lines, dependent: :destroy
 	has_many :consolidate_lines, dependent: :destroy
 	has_many :order_lines, dependent: :destroy

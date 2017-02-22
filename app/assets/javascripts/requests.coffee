@@ -37,6 +37,13 @@ $(document).ready ->
       $('.type').append $('<option>',
         value: 0
         text: 'Please Select')
+      $('.product')
+        .find('option')
+        .remove()
+      ;
+      $('.product').append $('<option>',
+        value: 0
+        text: 'Please Select')
     else
       while i < arr_type.length
         if ("" + arr_type[i]['category_id']) == ("" + $(ev.currentTarget).val())
@@ -53,6 +60,13 @@ $(document).ready ->
         .remove()
       ;
       $('.type').append $('<option>',
+        value: 0
+        text: 'Please Select')
+      $('.product')
+        .find('option')
+        .remove()
+      ;
+      $('.product').append $('<option>',
         value: 0
         text: 'Please Select')
       while j < z
@@ -112,18 +126,22 @@ $(document).ready ->
     z = 0
     j = 0
     arr_unit = []
+    arr_product = []
     arr_unit = $('.unit_info').data('unit')
+    arr_product = $('.product_info').data('product')
     count = ev.currentTarget.id.match(/\d+/)[0]
+    prod_unit = arr_product[count]['unit_id']
     if $(ev.currentTarget).val() == ""
-      $('#unit_' + count).val(0)
+      $('#unit_' + count).val("")
       $('#request_request_lines_attributes_' + count + '_unit_id').val(0)
       $('#request_request_lines_attributes_' + count + '_product_id').val(0)
     else
       while i < arr_unit.length
-        if ("" + arr_unit[i]['unit_id']) == ("" + $(ev.currentTarget).val())
+        if ("" + arr_unit[i]['id']) == ("" + prod_unit)
           $('#unit_' + count).val(arr_unit[i]['name'])
-          $('#request_request_lines_attributes_' + count + '_unit_id').val(arr_unit[i]['unit_id'])
+          $('#request_request_lines_attributes_' + count + '_unit_id').val(arr_unit[i]['id'])
         i++
       $('#request_request_lines_attributes_' + count + '_product_id').val($(ev.currentTarget).val())
+    console.log arr_product[count]['unit_id']
 
 

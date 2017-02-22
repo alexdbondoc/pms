@@ -3,12 +3,13 @@ class RequestsController < ApplicationController
   before_action :require_user
 	#before_action :require_admin, except: [:index, :show]
 	def index
-      sleep 1
-      if current_user.department.name == "Department Head"
-	      @requests = Request.where(:department_id => current_user.department_id).order("date_created DESC").paginate(page: params[:page], per_page: 25)
-      else
-        @requests = Request.where(:user_id => current_user.id).order("date_created DESC").paginate(page: params[:page], per_page: 25)
-      end
+    sleep 1
+    if current_user.department.name == "Department Head"
+      @requests = Request.where(:department_id => current_user.department_id).order("date_created DESC").paginate(page: params[:page], per_page: 25)
+    else
+      @requests = Request.where(:user_id => current_user.id).order("date_created DESC").paginate(page: params[:page], per_page: 25)
+    end
+    @current_officer = User.joins(:designation).where("department_id = #{current_user.department.id} AND designations.name = 'Department Head'")
 	end
   
 	def new
@@ -88,9 +89,15 @@ class RequestsController < ApplicationController
 	def edit
   	@request = Request.find(params[:id])
     @current_officer = User.joins(:designation).where("department_id = #{current_user.department.id} AND designations.name = 'Department Head'")
+    @type = Type.all
+    @product = Product.all
+    @unit = Unit.all
 	end
   
   def update
+    @type = Type.all
+    @product = Product.all
+    @unit = Unit.all
     @action = params[:commit]
     request_ids = params[:request_ids]
     @act = false
@@ -236,6 +243,7 @@ class RequestsController < ApplicationController
 
   def show
     @request = Request.find(params[:id])
+    @current_officer = User.joins(:designation).where("department_id = #{current_user.department.id} AND designations.name = 'Department Head'")
     	#@department_users = @department.users.paginate(page: params[:page], per_page: 5)
 	end
 
