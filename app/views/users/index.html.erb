@@ -1,0 +1,39 @@
+<div class="panel panel-default">
+  <div class="panel-heading center"><strong>List of Employee</strong></div>
+    <table class="table">
+    	<thead>
+    		<th><center>Employe<br>Name</center></th>
+    		<th colspan="3"><center>Employe<br>Address</center></th>
+    		<th><center>Employe<br>Email</center></th>
+    		<th><center>Contact<br>Number</center></th>
+    		<th><center>Designation<br>Name</center></th>
+    		<th><center>Department<br>Name</center></th>
+    		<th><center>Group<br>Name</center></th>
+    		<th>
+    			<%if current_user.designation.name == "System Admin"%>
+    				<%= link_to "New Employee", new_user_path, class: "btn btn-xs btn-primary",
+		              data: { confirm: "Are you sure you want to add new employee?" }%>
+    			<%end%>
+    		</th>
+    	</thead>
+    	<tbody>
+    		<%@users.each do |user|%>
+    			<tr>
+    				<td><center><strong><%= user.empname %></strong></center></td>
+    				<td colspan="3"><center><strong><%= user.address %></strong></center></td>
+    				<td><center><strong><%= user.email %></strong></center></td>
+    				<td><center><strong><%= user.contact_number %></strong></center></td>
+    				<td><center><strong><%= user.designation.name %></strong></center></td>
+    				<td><center><strong><%= user.department.name %></strong></center></td>
+    				<td><center><strong><%= user.department.group.name %></strong></center></td>
+    				<td>
+    					<%if current_user.designation.name == "System Admin"%>
+	    					<%= link_to "Update Info", edit_user_path(user), class: "btn btn-xs btn-primary",
+			              		data: { confirm: "Are you sure you want to update employee's information?" }%>
+	    				<%end%>
+    				</td>
+    			</tr>
+    		<%end%>
+    	</tbody>
+    </table>
+</div>

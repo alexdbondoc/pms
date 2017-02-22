@@ -1,0 +1,148 @@
+<h1 align="center">Create new Request</h1>
+<%= form_for(@request) do |f| %>
+<%= render 'share/errors', obj: @request %>
+	<div class="panel panel-default">
+  	<!-- Default panel contents -->
+  		<div class="panel-heading center"><strong>Requisition of Equipments Form</strong></div>
+  		<!-- Table -->
+  		<table class="table">
+	  		<thead>
+	  			<tr>
+					<td colspan="6"> <center><strong>Request Type</strong></center> </td>
+				</tr>
+				<tr>
+					<td colspan="6"> 
+						<center>
+							<%= f.collection_select(:category_id, Category.all, :id, :name,  {include_blank: 'Please Select'}) %>
+						</center> 
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2"><center><strong>Requestor Info</strong></center></td>
+					<td colspan="2"><center><strong>Aproving Officer Info</strong></center></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2"> 
+						<center>
+							<%= f.label current_user.empname %>
+							<%= f.hidden_field(:user_id, value: current_user.id) %>
+						</center> 
+					</td>
+					<td colspan="2">
+						<% @current_officer.each do |co| %>
+							<center><%= f.label co.empname %>
+								<%= f.hidden_field(:officer_id, value: co.id) %>
+							</center>
+						<%end%>
+					</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td></td>
+  					<td colspan="2"> 
+  						<center>
+  							<%= f.label current_user.designation.name %>
+  						</center> 
+  					</td>
+  					<td colspan="2"> 
+						<% @current_officer.each do |co| %>
+							<center><%= f.label co.designation.name %></center>
+						<%end%>
+  					</td>
+					<td></td>
+				</tr>
+
+				<tr>
+					<td></td>
+  					<td colspan="2"> 
+  						<center>
+  							<%= f.label current_user.department.name %>
+							<%= f.hidden_field(:department_id, value: current_user.department_id) %>
+							<%= f.hidden_field(:status, value: "Pending") %>
+							<% time = Time.now %>
+							<%= f.hidden_field(:date_created, value: time.to_formatted_s(:db)) %>
+  						</center>
+  					</td colspan="2">
+  					<td> 
+						<% @current_officer.each do |co| %>
+							<center><%= f.label co.department.name %></center>
+						<%end%>
+  					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<th><center>Equipment Type</center></th>
+					<th colspan="2"><center>Equipment Name</center></th>
+					<th><center>Quantity</center></th>
+					<th><center>Unit</center></th>
+				</tr>
+	  		</thead>
+	  		<tbody>
+	  		<%i = 0%>
+	  		<% 5.times do %>
+	  		<%= f.fields_for :request_lines, @request.request_lines.build do |rl| %>
+				<tr>
+					<td>
+						<center>
+							<%= select_tag "type[#{i}]", "<option>Please Select</option>".html_safe, class: :type%>
+						</center> 
+							<%= rl.hidden_field(:type_id)%>
+					</td>
+					<td colspan="3"> 
+						<center>
+						<%= select_tag "product[#{i}]", "<option>Please Select</option>".html_safe, class: :product %>
+							<%= rl.hidden_field(:product_id)%>
+						</center> 
+					</td>
+	  				<td> 
+	  					<center>
+							<div class="form-group">
+								<%= rl.number_field :qty, autofocus: true, in: 1..10%>
+							</div> 
+						</center>
+					</td>
+					<td> 
+						<center>
+							<%= text_field_tag "unit[#{i}]", nil, placeholder: "Equipment unit", 
+									:style => "text-align: Center", readonly: true%>
+							<%= rl.hidden_field(:unit_id)%>
+						</center> 
+					</td>
+				</tr>
+			<%end%>
+			<%i +=1%>
+			<%end%>
+			</tbody>
+			<%= content_tag :div, class: "type_info", data: { type: @type } do %>
+          	<% end %>
+          	<%= content_tag :div, class: "product_info", data: { product: @product } do %>
+          	<% end %>
+          	<%= content_tag :div, class: "unit_info", data: { unit: @unit } do %>
+          	<% end %>
+			<tfoot>
+				<tr>
+				    <td colspan=8>
+				    	<center><strong>Purpose: </strong></center>
+				    	<div class="col-sm-12">
+							<%= f.text_area :reason, rows: 3, class: "form-control", placeholder: "Purpose for requesition of item" %>
+				    	</div>
+				    </td>
+				</tr>
+
+				<tr>
+					<td colspan=8>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-8">
+								<center><%= f.submit(@request.new_record? ? "Generate Request" : "Update Request", class: "btn btn-primary btn-lg")%></center>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+<%end%>
