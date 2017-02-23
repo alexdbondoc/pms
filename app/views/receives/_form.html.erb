@@ -100,6 +100,7 @@
                 <center>
                   <%= rl.number_field :receiving_qty, value: 0, in: 0..ol.qty, autofocus: true, 
                         class: :receive_qty, disabled: true %>
+                  <%= rl.hidden_field(:status, value: "Pending") %>
                 </center>
               </td>
               <td>

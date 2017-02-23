@@ -56,7 +56,7 @@
     <tbody>
         <% @requests.each do |req| %>
           <tr>
-            <% if logged_in? && current_user.id != req.officer_id %>
+            <% if logged_in? && current_user.id == req.officer_id %>
               <td>
                 <%= check_box_tag "request_id[#{req.id}]", req.id, nil, 
                     {:checked => false, :multiple => true, class: :request_id} %>

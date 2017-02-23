@@ -8,22 +8,12 @@
   		<table class="table">
 	  		<thead>
 	  			<tr>
-			  		<div class="row">
-			  			<div class="form-group">	
-							<td></td>
-							<td></td>
-							<td></td>
-							<td> 
-								<center>
-									<strong>Request Type: &nbsp <%= @category %></strong>
-									<%= f.hidden_field(:category_id, value: @category_id) %>
-								</center> 
-							</td>
-							<td> </td>
-							<td> </td>
-							<td></td>
-						</div>
-					</div>
+					<td colspan="8"> 
+						<center>
+							<strong>Request Type: &nbsp <%= @consolidate.category.name %></strong>
+							<%= f.hidden_field(:category_id, value: @category_id) %>
+						</center> 
+					</td>
 				</tr>
 
 				<tr>
@@ -37,92 +27,69 @@
 				</tr>
 
 				<tr>
-					<div class="row">
-		  				<div class="form-group">
-							<td> 
-								<center>
-									<%= f.label current_user.empname %>
-									<%= f.hidden_field(:user_id, value: current_user.id) %>
-								</center> 
-							</td>
-							<td></td>
-							<td>
-								<center>
-									<%@itd.each do |itd|%>
-										<strong><%= itd.empname %></strong>
-										<%= f.hidden_field(:inspected_by, value: itd.id) %>
-									<%end%>
-								</center>
-							</td>
-							<td></td>
-		  					<td><center><strong><%= @consolidate.officer.user.empname %></strong></center></td>
-							<td></td>
-							<td>
-								<center>
-									<%@ppmd.each do |ppmd|%>
-										<strong><%= ppmd.empname %></strong>
-										<%= f.hidden_field(:received_by, value: ppmd.id) %>
-									<%end%>
-								</center>
-							</td>
-						</div>
-					</div>
+					<td> 
+						<center>
+							<%= f.label current_user.empname %>
+							<%= f.hidden_field(:user_id, value: current_user.id) %>
+						</center> 
+					</td>
+					<td></td>
+					<td>
+						<center>
+								<strong><%= @itd.empname %></strong>
+								<%= f.hidden_field(:inspected_by, value: @itd.id) %>
+						</center>
+					</td>
+					<td></td>
+					<%@officer = User.find(@consolidate.officer_id)%>
+  					<td><center><strong><%= @officer.empname %></strong></center></td>
+					<td></td>
+					<td>
+						<center>
+								<strong><%= @ppmd.empname %></strong>
+								<%= f.hidden_field(:received_by, value: @ppmd.id) %>
+						</center>
+					</td>
 				</tr>
 
 				<tr>
-					<div class="row">
-		  				<div class="form-group">
-		  					<td> <center><%= f.label current_user.designation.name %> </center> </td>
-							<td></td>
-							<td>
-								<center> 
-		  							<% @itd.each do |itd| %>
-		  								<strong><%= itd.designation.name %></strong> 
-		  							<%end%>
-		  						</center>
-							</td>
-							<td></td>
-		  					<td><center><strong><%= @consolidate.user.designation.name %></strong></center></td>
-							<td></td>
-							<td>
-								<center>
-									<% @ppmd.each do |ppmd| %>
-										<strong><%= ppmd.designation.name %></strong> 
-									<%end%>
-								</center>
-							</td>
-		  				</div>
-		  			</div>
+  					<td> <center><%= f.label current_user.designation.name %> </center> </td>
+					<td></td>
+					<td>
+						<center> 
+  								<strong><%= @itd.designation.name %></strong> 
+  						</center>
+					</td>
+					<td></td>
+  					<td><center><strong><%= @consolidate.user.designation.name %></strong></center></td>
+					<td></td>
+					<td>
+						<center>
+								<strong><%= @ppmd.designation.name %></strong> 
+						</center>
+					</td>
 				</tr>
 
 				<tr>
-					<div class="row">
-		  				<div class="form-group">
-		  					<td> <center><%= f.label current_user.department.name %>
-								<%= f.hidden_field(:department_id, value: current_user.department_id) %>
-								<%= f.hidden_field(:inspected_date, value: @time.to_formatted_s(:db)) %>
-								<%= f.hidden_field(:status, value: "Inspected") %>
-		  					</center></td>
-							<td></td>
-							<td>
-								<center> 
-		  							<% @itd.each do |itd| %>
-		  								<strong><%= itd.department.name %></strong> 
-		  							<%end%>
-		  						</center>
-							</td>
-							<td></td>
-		  					<td><center><strong><%= @consolidate.user.department.name %></strong></center></td>
-							<td></td>
-							<td>
-								<center>
-									<% @ppmd.each do |ppmd| %>
-										<strong><%= ppmd.department.name %></strong>
-									<%end%>
-								</center>
-							</td>
-		  				</div>
-		  			</div>
+  					<td> <center><%= f.label current_user.department.name %>
+						<%= f.hidden_field(:department_id, value: current_user.department_id) %>
+						<%= f.hidden_field(:inspected_date, value: @time.to_formatted_s(:db)) %>
+						<%= f.hidden_field(:status, value: "Inspected") %>
+  					</center></td>
+					<td></td>
+					<td>
+						<center> 
+  								<strong><%= @itd.department.name %></strong> 
+  						</center>
+					</td>
+					<td></td>
+  					<td><center><strong><%= @consolidate.user.department.name %></strong></center></td>
+					<td></td>
+					<td>
+						<center>
+								<strong><%= @ppmd.department.name %></strong>
+						</center>
+					</td>
 				</tr>
 				<tr>
 					<td></td>

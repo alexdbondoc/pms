@@ -35,7 +35,7 @@ class ReceivesController < ApplicationController
   # GET /receives/1/edit
   def edit
     @time = Time.now
-    @order_lines = OrderLine.where(:order_id => @receive.order_id)
+    @order_lines = OrderLine.where("order_id = @receive.order_id AND qty > 0")
     @lines = Array.new(@order_lines.length)
     i = 0
     @order_lines.each do |ol|
@@ -105,6 +105,7 @@ class ReceivesController < ApplicationController
     # raise params.inspect
 
     if params[:assign] != nil
+      raise params.inspect
       redirect_to new_assign_path(:receive => @receive)
     else
       remain_qty = Array.new(sx.length)
@@ -202,7 +203,7 @@ class ReceivesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def receive_params
       params.require(:receive).permit(:receive_num, :user_id, :dr_num, :dr_date, :invoice_num, :invoice_date, :delivery_type, :order_id, :gross, :tax, :net,  
-        receive_lines_attributes: [:receive_id, :type_id, :product_id, :description, :qty, :unit_id, :receiving_qty], 
+        receive_lines_attributes: [:receive_id, :type_id, :product_id, :description, :qty, :unit_id, :receiving_qty, :status], 
         inventories_attributes: [:receive_id, :inventory_number, :category_id, :type_id, :product_id, :qty, :description, :status, :unit_id])
     end
 end

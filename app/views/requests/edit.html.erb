@@ -75,21 +75,21 @@
 					<th></th>
 				</tr>
 	  		</thead>
-	  		<tbody class="dynamic" id="pda-details">
+	  		<tbody>
 	  		<%i = 0%>
 	  		<%= f.fields_for :request_lines, @request.request_lines do |rl| %>
 				<tr>
 					<td>
 						<center>
-							<%@types = Type.where(:category_id => @request.category_id)%>
-							<%= select_tag "type[#{i}]", options_from_collection_for_select(@types, "id", "name"), class: :type%>
+							<%@types = Type.where(:category_id => @request.request_lines[i].type.category_id)%>
+							<%= select_tag "type[#{i}]", options_from_collection_for_select(@types, "id", "name"), include_blank: "Please Select", class: :type%>
 						</center> 
 							<%= rl.hidden_field(:type_id)%>
 					</td>
 					<td colspan="2"> 
 						<center>
 							<%@products = Product.where(:type_id => @request.request_lines[i].type_id)%>
-							<%= select_tag "product[#{i}]", options_from_collection_for_select(@products, "id", "name"), class: :product %>
+							<%= select_tag "product[#{i}]", options_from_collection_for_select(@products, "id", "name"), include_blank: "Please Select", class: :product %>
 							<%= rl.hidden_field(:product_id)%>
 						</center> 
 					</td>
@@ -102,7 +102,7 @@
 					</td>
 					<td> 
 						<center>
-							<%= text_field_tag "unit[#{i}]", nil, placeholder: "Equipment unit", 
+							<%= text_field_tag "unit[#{i}]", @request.request_lines[i].unit.name, placeholder: "Equipment unit", 
 									:style => "text-align: Center", readonly: true%>
 							<%= rl.hidden_field(:unit_id)%>
 						</center> 

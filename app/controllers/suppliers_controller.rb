@@ -28,28 +28,22 @@ class SuppliersController < ApplicationController
   def create
     @supplier = Supplier.new(supplier_params)
 
-    respond_to do |format|
-      if @supplier.save
-        format.html { redirect_to @supplier, notice: 'Supplier was successfully created.' }
-        format.json { render :show, status: :created, location: @supplier }
-      else
-        format.html { render :new }
-        format.json { render json: @supplier.errors, status: :unprocessable_entity }
-      end
+    if @supplier.save
+      flash[:success] = "Supplier was successfully created"
+      redirect_to suppliers_path
+    else
+      render 'new'
     end
   end
 
   # PATCH/PUT /suppliers/1
   # PATCH/PUT /suppliers/1.json
   def update
-    respond_to do |format|
-      if @supplier.update(supplier_params)
-        format.html { redirect_to @supplier, notice: 'Supplier was successfully updated.' }
-        format.json { render :show, status: :ok, location: @supplier }
-      else
-        format.html { render :edit }
-        format.json { render json: @supplier.errors, status: :unprocessable_entity }
-      end
+    if @supplier.update(supplier_params)
+      flash[:success] = "Supplier was successfully updated"
+      redirect_to suppliers_path
+    else
+      render 'edit'
     end
   end
 

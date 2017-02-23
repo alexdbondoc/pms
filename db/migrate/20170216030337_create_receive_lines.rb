@@ -8,6 +8,7 @@ class CreateReceiveLines < ActiveRecord::Migration[5.0]
     	t.integer :unit_id
     	t.integer :receiving_qty
     	t.integer :receive_id
+      t.string :status
       t.timestamps
     end
   end

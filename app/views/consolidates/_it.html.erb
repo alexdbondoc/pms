@@ -58,7 +58,7 @@
 								<center>
 									<% @grp.each do |g| %>
 										<strong><%= g.empname %></strong>
-										<%= f.hidden_field(:officer_id, value: g.officers.ids) %>
+										<%= f.hidden_field(:officer_id, value: g.id) %>
 									<%end%>
 								</center>
 							</td>

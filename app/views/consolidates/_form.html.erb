@@ -7,110 +7,97 @@
   		<table class="table">
 	  		<thead>
 	  			<tr>
-			  		<div class="row">
-			  			<div class="form-group">	
-							<td></td>
-							<td></td>
-							<td> 
-								<center>
-									<strong>Request Type: &nbsp <%= @category %></strong>
-									<%= f.hidden_field(:category_id, value: @category_id) %>
-								</center> 
-							</td>
-							<td> </td>
-							<td></td>
-						</div>
-					</div>
+					<td></td>
+					<td></td>
+					<td> 
+						<center>
+							<strong>Request Type: &nbsp <%= @category %></strong>
+							<%= f.hidden_field(:category_id, value: @category_id) %>
+						</center> 
+					</td>
+					<td> </td>
+					<td></td>
 				</tr>
 
 				<tr>
+					<th></th>
 					<th><center>Requestor Info</center></th>
-					<th></th>
 					<th><center>Approver Info</center></th>
-					<th></th>
 					<th><center>Reciever Info</center></th>
+					<th></th>
 				</tr>
 
 				<tr>
-					<div class="row">
-		  				<div class="form-group">
-							<td> 
-								<center>
-									<%= f.label current_user.empname %>
-									<%= f.hidden_field(:user_id, value: current_user.id) %>
-								</center> 
-							</td>
-							<td></td>
-							<td>
-								<center>
-									<% @grp.each do |g| %>
-										<strong><%= g.empname %></strong>
-										<%= f.hidden_field(:officer_id, value: g.officers.ids) %>
-									<%end%>
-								</center>
-							</td>
-							<td></td>
-							<td>
-								<center>
-									<%@ppmd.each do |ppmd|%>
-										<strong><%= ppmd.empname %></strong>
-										<%= f.hidden_field(:received_by, value: ppmd.id) %>
-									<%end%>
-								</center>
-							</td>
-						</div>
-					</div>
+					<td></td>
+					<td> 
+						<center>
+							<%= f.label current_user.empname %>
+							<%= f.hidden_field(:user_id, value: current_user.id) %>
+						</center> 
+					</td>
+					<td>
+						<center>
+							<% @grp.each do |g| %>
+								<strong><%= g.empname %></strong>
+								<%= f.hidden_field(:officer_id, value: g.id) %>
+							<%end%>
+						</center>
+					</td>
+					<td>
+						<center>
+							<%@ppmd.each do |ppmd|%>
+								<strong><%= ppmd.empname %></strong>
+								<%= f.hidden_field(:received_by, value: ppmd.id) %>
+							<%end%>
+						</center>
+					</td>
+					<td></td>
 				</tr>
 
 				<tr>
-					<div class="row">
-		  				<div class="form-group">
-		  					<td> <center><%= f.label current_user.designation.name %> </center> </td>
-							<td></td>
-		  					<td> 
-		  						<center> 
-		  							<% @grp.each do |g| %>
-		  								<strong><%= g.designation.name %></strong> 
-		  							<%end%>
-		  						</center>
-		  					</td>
-							<td></td>
-							<td>
-								<center>
-									<% @ppmd.each do |ppmd| %>
-										<strong><%= ppmd.designation.name %></strong> 
-									<%end%>
-								</center>
-							</td>
-		  				</div>
-		  			</div>
+					<td></td>
+  					<td> <center><%= f.label current_user.designation.name %> </center> </td>
+  					<td> 
+  						<center> 
+  							<% @grp.each do |g| %>
+  								<strong><%= g.designation.name %></strong> 
+  							<%end%>
+  						</center>
+  					</td>
+					<td>
+						<center>
+							<% @ppmd.each do |ppmd| %>
+								<strong><%= ppmd.designation.name %></strong> 
+							<%end%>
+						</center>
+					</td>
+					<td></td>
 				</tr>
 
 				<tr>
-					<div class="row">
-		  				<div class="form-group">
-		  					<td> <center><%= f.label current_user.department.name %>
-								<%= f.hidden_field(:department_id, value: current_user.department_id) %>
-								<%= f.hidden_field(:status, value: "Pending") %>
-		  					</center></td>
-							<td></td>
-		  					<td> 
-								<center> 
-									<% @grp.each do |g| %>
-		  								<strong><%= g.department.name %></strong> 
-		  							<%end%>
-		  						</center>
-		  					</td>
-							<td></td>
-							<td>
-								<center>
-									<% @ppmd.each do |ppmd| %>
-										<strong><%= ppmd.department.name %></strong>
-									<%end%>
-								</center>
-							</td>
-		  				</div>
-		  			</div>
+					<td></td>
+  					<td> 
+  						<center>
+	  						<%= f.label current_user.department.name %>
+							<%= f.hidden_field(:department_id, value: current_user.department_id) %>
+							<%= f.hidden_field(:status, value: "Pending") %>
+  						</center>
+  					</td>
+  					<td> 
+						<center> 
+							<% @grp.each do |g| %>
+  								<strong><%= g.department.name %></strong> 
+  							<%end%>
+  						</center>
+  					</td>
+					<td>
+						<center>
+							<% @ppmd.each do |ppmd| %>
+								<strong><%= ppmd.department.name %></strong>
+							<%end%>
+						</center>
+					</td>
+					<td></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -131,41 +118,37 @@
 	  		<% @request_lines.each do |rl| %>
 		  		<%= f.fields_for :consolidate_lines, @consolidate.consolidate_lines.build do |cl| %>
 					<tr>
-						<div class="row">
-			  				<div class="form-group">
-				  				<%= cl.hidden_field(:request_id, value: rl.request_id) %>
-								<td> 
-									<center>
-										<strong><%= rl.type.name %></strong>
-										<%= cl.hidden_field(:type_id, value: rl.type_id) %>
-									</center> 
-								</td>
-								<td> 
-									<center>
-										<strong>
-											<%= rl.product.name %>
-											<%= cl.hidden_field(:product_id, value: rl.product_id) %>
-										</strong>
-									</center> 
-								</td>
-				  				<td> 
-									<center>
-										<strong><%= rl.qty %> <%= cl.hidden_field(:qty, value: rl.qty) %></strong>
-									</center> 
-								</td>
-								<td> 
-									<center>
-										<strong>
-											<%= rl.unit.name %>
-											<%= cl.hidden_field(:unit_id, value: rl.unit_id) %>
-										</strong>
-									</center> 
-								</td>
-								<td>
-									<center><strong><%= rl.request.user.empname %></strong></center>
-								</td>
-			  				</div>
-				  		</div>
+		  				<%= cl.hidden_field(:request_id, value: rl.request_id) %>
+						<td> 
+							<center>
+								<strong><%= rl.type.name %></strong>
+								<%= cl.hidden_field(:type_id, value: rl.type_id) %>
+							</center> 
+						</td>
+						<td> 
+							<center>
+								<strong>
+									<%= rl.product.name %>
+									<%= cl.hidden_field(:product_id, value: rl.product_id) %>
+								</strong>
+							</center> 
+						</td>
+		  				<td> 
+							<center>
+								<strong><%= rl.qty %> <%= cl.hidden_field(:qty, value: rl.qty) %></strong>
+							</center> 
+						</td>
+						<td> 
+							<center>
+								<strong>
+									<%= rl.unit.name %>
+									<%= cl.hidden_field(:unit_id, value: rl.unit_id) %>
+								</strong>
+							</center> 
+						</td>
+						<td>
+							<center><strong><%= rl.request.user.empname %></strong></center>
+						</td>
 					</tr>
 				<%end%>
 			<%end%>

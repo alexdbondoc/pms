@@ -38,7 +38,22 @@ class AssignsController < ApplicationController
 
     # raise params.inspect
     if @assign.save
-
+      params = ActionController::Parameters.new({
+        inventory: {
+          status: "Assigned"
+        }
+      })
+      permitted = params.require(:inventory).permit(:status)
+      @assign.assign_lines.each do |al|
+        params = ActionController::Parameters.new({
+          inventory: {
+              status: "Assigned"
+          }
+            })
+        permitted = params.require(:inventory).permit(:status)
+        @inventory = Inventory.find(al.inventory_id)
+        @inventory.update(permitted)
+      end
       flash[:success] = "Purchase Order has successfully Received. Received Equipments are now in the inventory."
       redirect_to assigns_path
     else

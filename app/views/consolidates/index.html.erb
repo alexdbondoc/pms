@@ -89,7 +89,12 @@
 		  		<%else%>
 		  			<td></td>
 		  		<%end%>
-		  		<td><center><strong><%= cons.officer.user.empname%></strong></center></td>
+		  		<td>
+		  			<% @officer = User.where("id" => cons.officer_id) %>
+		  			<%@officer.each do |officer|%>
+		  				<center><strong><%= officer.empname%></strong></center>
+		  			<%end%>
+		  		</td>
 		  		<% @receiver = User.where("id" => cons.received_by) %>
 		  			<%@receiver.each do |r|%>
 						<td><center><strong><%= r.empname %></strong></center></td>
@@ -101,7 +106,7 @@
 	           	            data: {confirm: "Are you sure you want to view this request?"}, 
 	                        class: "btn btn-xs btn-info" %>
 	                <%if current_user.designation.name == "Department Head" && 
-	                	current_user.department.name == "IT Department" && 
+	                	current_user.department.name == "Information and Communication Technology" && 
 	                	cons.status == "Pending" && cons.category.name == "IT Equipment" %>
 		  				<%= link_to "Add Specs", edit_consolidate_path(cons),
 	           	            data: {confirm: "Are you sure you want to add specs to this request?"}, 

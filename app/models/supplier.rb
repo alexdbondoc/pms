@@ -15,7 +15,7 @@ class Supplier < ApplicationRecord
 				length: { minimum: 7, maximum: 8}
 	validates :tin, presence: true, 
 				uniqueness: { case_sensitive: false }, 
-				length: { minimum: 9, maximum: 11}
+				length: { minimum: 9, maximum: 20}
 	validates :fax, presence: true, 
 				uniqueness: { case_sensitive: false }, 
 				length: { minimum: 15, maximum: 20}

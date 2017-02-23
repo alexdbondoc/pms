@@ -22,7 +22,7 @@ class ConsolidatesController < ApplicationController
 
 		@grp = User.joins(:designation, [{department: :group}]).where(designations: { name: 'Group Head' }, groups: {name: current_user.department.group.name})
 		@ppmd = User.joins(:designation, :department).where(designations: { name: 'Department Head' }, departments: { name: 'Property and Procurement' })
-		@itd = User.joins(:designation, :department).where(designations: { name: 'Department Head' }, departments: { name: 'IT Department' })
+		@itd = User.joins(:designation, :department).where(designations: { name: 'Department Head' }, departments: { name: 'Information and Communication Technology' })
 
 		@requests = Request.find(@request_ids)
 		@request_lines = RequestLine.where(:request_id => @request_ids)
@@ -86,8 +86,8 @@ class ConsolidatesController < ApplicationController
 	def edit
 		@time = Time.now 
 		@consolidate = Consolidate.find(params[:id])
-		@ppmd = User.joins(:designation, :department).where(designations: { name: 'Department Head' }, departments: { name: 'Property and Procurement' })
-		@itd = User.joins(:designation, :department).where(designations: { name: 'Department Head' }, departments: { name: 'IT Department' })
+		@ppmd = User.find(@consolidate.received_by)
+		@itd = User.find(@consolidate.inspected_by)
 	end
 
 	def update

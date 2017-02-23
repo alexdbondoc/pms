@@ -22,7 +22,8 @@
 						<li><strong>Status: Pending<strong></li>
 					<%end%>
 				<%end%>
-				<li><strong>Approving Officer: <%= @consolidate.officer.user.empname %></strong></li>
+				<%@officer = User.find(@consolidate.officer_id)%>
+				<li><strong>Approving Officer: <%= @officer.empname %></strong></li>
 				<%if @consolidate.group_head_approve != nil%>
 					<li>
 						<strong>
@@ -78,7 +79,7 @@
 	</div>
 	<hr>
 		<div class="article-actions center">
-			<%if logged_in? && (current_user.id == @consolidate.officer.user_id) %>
+			<%if logged_in? && (current_user.id == @officer.id) %>
 				<%= link_to "Approve", consolidate_path(@consolidate, :approve => true), method: :put, 
 	                            data: {confirm: "Are you sure you want to approve this request?"}, 
 	               		        class: "btn btn-xs btn-success" %>

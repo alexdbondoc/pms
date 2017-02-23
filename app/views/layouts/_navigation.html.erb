@@ -36,12 +36,13 @@
             <ul class="dropdown-menu">
               <li><%= link_to "List of Requests", requests_path %></li>
               <li><%= link_to "New Request", new_request_path %></li>
+              <li><%= link_to "Consolidated Requests", consolidates_path %></li>
             </ul>
           </li>
-          <li><%= link_to "Consolidated Requests", consolidates_path %></li>
           <li><%= link_to "Purchase Order", orders_path %></li>
           <li><%= link_to "Received Purchase Order", receives_path %></li>
           <li><%= link_to 'Inventory', inventories_path %></li>
+          <li><%= link_to 'Assigned Equipments', assigns_path %></li>
         <% end %>
       </ul>
       <!-- <form class="navbar-form navbar-left" role="search">
