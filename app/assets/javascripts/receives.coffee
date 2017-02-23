@@ -53,7 +53,9 @@ $(document).ready ->
 	      		x = 0
 	      	else
 	      		while x < $('.receive_qty').length
-	      			$('#receive_receive_lines_attributes_' + x + '_receiving_qty').removeAttr('disabled')
+	      			if ("" + $('#po_qty__' + x + '_').val()) == ("0")
+	      			else
+	      				$('#receive_receive_lines_attributes_' + x + '_receiving_qty').removeAttr('disabled')
 	      			$('#receive_receive_lines_attributes_' + x + '_receiving_qty').val(0)
 	      			$('#remain_qty__' + x + '_').val($('#po_qty__' + x + '_').val())
 	      			$('#rem_qty__' + x + '_').val($('#po_qty__' + x + '_').val())
@@ -70,6 +72,23 @@ $(document).ready ->
 	      			$('#receive_inventories_attributes_' + x + '_qty').val(0)
 	      			x++
 	      	x = 0
+
+	$('.receive_qty').on 'click', (ev) ->
+	  receive_qty = $(ev.currentTarget).val()
+	  count = ev.currentTarget.id.match(/\d+/)[0]
+	  qty = $('#receive_receive_lines_attributes_' + count + '_qty').val()
+	  remain_qty = qty - receive_qty
+	  if remain_qty < 0
+	  	$('#remain_qty__' + count + '_').val(remain_qty)
+	  	$('#rem_qty__' + count + '_').val(remain_qty)
+	  	$('#receive_inventories_attributes_' + count + '_qty').val(receive_qty)
+	  	$('#rem_qty__' + count + '_').css("background-color","#ff0000")
+	  else
+	  	$('#remain_qty__' + count + '_').val(remain_qty)
+	  	$('#rem_qty__' + count + '_').val(remain_qty)
+	  	$('#receive_inventories_attributes_' + count + '_qty').val(receive_qty)
+	  	$('#rem_qty__' + count + '_').css("background-color","#ffffff")
+	  console.log $('#remain_qty__' + count + '_').val()
 
 	$('.receive_qty').on 'keyup', (ev) ->
 	  receive_qty = $(ev.currentTarget).val()

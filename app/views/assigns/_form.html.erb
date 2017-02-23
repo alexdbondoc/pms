@@ -15,64 +15,64 @@
       </thead>
       <tbody>
         <%i = 0%>
-        <%@receive_line.each do |line|%>
+        <%@inventory.each do |invent|%>
           <%= f.fields_for :assign_lines, @assign.assign_lines.build do |al| %>
             <tr>
               <td>
-                <center><strong><%= line.receive.inventories[i].inventory_number %></strong></center>
-                <%= al.hidden_field(:inventory_number, value: line.receive.inventories[i].inventory_number)%>
+                <center><strong><%= invent.inventory_number %></strong></center>
+                <%= al.hidden_field(:inventory_number, value: invent.inventory_number)%>
               </td>
               <td>
-                <center><strong><%= line.receive.inventories[i].category.name %></strong></center>
+                <center><strong><%= invent.category.name %></strong></center>
               </td>
               <td>
-                <center><strong><%= line.receive.inventories[i].type.name %></strong></center>
+                <center><strong><%= invent.type.name %></strong></center>
               </td>
               <td colspan="3">
                 <center>
                   <strong>
-                    <%=line.receive.inventories[i].product.name%> &nbsp <%=line.receive.inventories[i].description%>
-                    <%= al.hidden_field(:inventory_id, value: line.receive.inventories[i].id) %>
+                    <%=invent.product.name%> &nbsp <%=invent.description%>
+                    <%= al.hidden_field(:inventory_id, value: invent.id) %>
                   </strong>
                 </center>
               </td>
               <td>
                 <center>
                   <strong>
-                    <%= pluralize(line.receive.inventories[i].qty, "#{line.receive.inventories[i].unit.name}") %>
+                    <%= pluralize(invent.qty, "#{invent.unit.name}") %>
                   </strong>
                 </center>
               </td>
               <td>
                 <center>
                   <strong>
-                    <%= number_to_currency(line.receive.order.order_lines[i].amount, delimiter: ',', unit: '₱ ') %>
+                    <%= number_to_currency(invent.receive.order.order_lines[i].amount, delimiter: ',', unit: '₱ ') %>
                   </strong>
                 </center>
               </td>
               <td>
                 <center>
                   <strong>
-                    <%= line.receive.inventories[i].updated_at.to_date.to_formatted_s(:rfc822) %>
+                    <%= invent.updated_at.to_date.to_formatted_s(:rfc822) %>
                   </strong>
                 </center>
               </td>
               <td>
                 <center>
                   <strong>
-                    <%= line.receive.order.order_lines[i].consolidate.consolidate_lines[i].request.user.empname %>
-                    <%= al.hidden_field(:user_id, value: line.receive.order.order_lines[i].consolidate.consolidate_lines[i].request.user_id) %>
+                    <%= invent.receive.order.order_lines[i].consolidate.consolidate_lines[i].request.user.empname %>
+                    <%= al.hidden_field(:user_id, value: invent.receive.order.order_lines[i].consolidate.consolidate_lines[i].request.user_id) %>
                   </strong>
                 </center>
               </td>
             </tr>
-          <%@consolidate_by[i] = line.receive.order.order_lines[i].consolidate.user.empname%>
-          <%@cons_dept[i] = line.receive.order.order_lines[i].consolidate.department.name%>
-          <%@cons_desig[i] = line.receive.order.order_lines[i].consolidate.user.designation.name%>
-          <%@received_by = line.receive.user.empname%>
-          <%@received_dept = line.receive.user.department.name%>
-          <%@received_desig = line.receive.user.designation.name%>
-          <%= hidden_field_tag :receive, line.receive_id %>
+          <%@consolidate_by[i] = invent.receive.order.order_lines[i].consolidate.user.empname%>
+          <%@cons_dept[i] = invent.receive.order.order_lines[i].consolidate.department.name%>
+          <%@cons_desig[i] = invent.receive.order.order_lines[i].consolidate.user.designation.name%>
+          <%@received_by = invent.receive.user.empname%>
+          <%@received_dept = invent.receive.user.department.name%>
+          <%@received_desig = invent.receive.user.designation.name%>
+          <%= hidden_field_tag :receive, invent.receive_id %>
           <%i +=1%>
           <%end%>
         <%end%>

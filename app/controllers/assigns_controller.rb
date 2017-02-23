@@ -16,10 +16,10 @@ class AssignsController < ApplicationController
   def new
     @assign = Assign.new
     @receive_id = params[:receive]
-    @receive_line = ReceiveLine.where("receive_id = ? AND qty > 0",@receive_id)
-    @consolidate_by = Array.new(@receive_line.length)
-    @cons_dept = Array.new(@receive_line.length)
-    @cons_desig = Array.new(@receive_line.length)
+    @inventory = Inventory.where("receive_id = ? AND status = 'Received' AND qty > 0",@receive_id)
+    @consolidate_by = Array.new(@inventory.length)
+    @cons_dept = Array.new(@inventory.length)
+    @cons_desig = Array.new(@inventory.length)
   end
 
   # GET /assigns/1/edit

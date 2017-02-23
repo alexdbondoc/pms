@@ -33,7 +33,7 @@
 				<li>
 					<center>
 						<strong>
-				Total Amount To Pay: <%= number_to_currency(@receive.gross, delimiter: ',', unit: '₱ ') %>
+							Total Amount To Pay: <%= number_to_currency(@receive.gross, delimiter: ',', unit: '₱ ') %>
 						</strong>
 					</center>
 				</li>
@@ -51,6 +51,7 @@
 				<th class="col-md-1 col-md-offset-4 center">Received Quantity </th>
 			</thead>
 			<tbody>
+				<%i = 0%>
 				<% @receive_line = ReceiveLine.where("receive_id" => @receive.id) %>
 				<% @receive_line.each do |line| %>
 					<tr>
@@ -64,6 +65,7 @@
 							<%= pluralize(line.receiving_qty, "#{line.unit.name}") %>
 						</td>
 					</tr>
+				<%i +=1%>
 				<%end%>
 			</tbody>
 		</table>

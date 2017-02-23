@@ -11,14 +11,7 @@
             <th><center>Department<center></th>
     	</thead>
         <tbody>
-            <%i = 0%>
-            <%@assigns.each do |ass|%>
-                <tr>
-                    <td><center><strong><%= ass.assign_lines[i].inventory_number %></strong></center></td>
-                    <td><center><strong><%= ass.assign_lines[i].inventory.type.name %></strong></center></td>
-                </tr>
-            <%i +=1%>
-            <%end%>
+            
         </tbody>
     </table>
 </div>

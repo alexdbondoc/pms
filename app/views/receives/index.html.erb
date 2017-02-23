@@ -38,7 +38,13 @@
               <%= link_to "View", receife_path(receive),
                   data: {confirm: "Are you sure you want to view this Received Purchase Order?"}, 
                     class: "btn btn-xs btn-info" %>
-              <%if receive.inventories[i].status == "Received"%>
+                <%@inventory = Inventory.where(:receive_id => receive.id)%>
+                <%j = 0%>
+                <%@invent_arr = Array.new(@inventory.length)%>
+                <%@inventory.each do |invent|%>
+                  <%@invent_arr[j] = invent.status%>
+                <%end%>
+              <%if @invent_arr.include?("Received")%>
                 <%= link_to "Assign", receife_path(receive, :assign => true), method: :put, 
                     data: {confirm: "Are you sure you want to assign received equipments?"}, 
                       class: "btn btn-xs btn-primary" %>

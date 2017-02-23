@@ -7,7 +7,7 @@ class ReceivesController < ApplicationController
   # GET /receives.json
   def index
     sleep 1
-    @receives = Receive.order("created_at DESC").paginate(page: params[:page], per_page: 5)
+    @receives = Receive.order("created_at DESC").paginate(page: params[:page], per_page: 20)
   end
 
   # GET /receives/1
@@ -35,7 +35,7 @@ class ReceivesController < ApplicationController
   # GET /receives/1/edit
   def edit
     @time = Time.now
-    @order_lines = OrderLine.where("order_id = @receive.order_id AND qty > 0")
+    @order_lines = OrderLine.where(:order_id => @receive.order_id)
     @lines = Array.new(@order_lines.length)
     i = 0
     @order_lines.each do |ol|
@@ -105,7 +105,7 @@ class ReceivesController < ApplicationController
     # raise params.inspect
 
     if params[:assign] != nil
-      raise params.inspect
+      @receive.inventories.count
       redirect_to new_assign_path(:receive => @receive)
     else
       remain_qty = Array.new(sx.length)
