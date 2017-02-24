@@ -14,6 +14,7 @@ class AssignsController < ApplicationController
 
   # GET /assigns/new
   def new
+    # raise params.inspect
     @assign = Assign.new
     @receive_id = params[:receive]
     @inventory = Inventory.where("receive_id = ? AND status = 'Received' AND qty > 0",@receive_id)
@@ -55,7 +56,7 @@ class AssignsController < ApplicationController
         @inventory.update(permitted)
       end
       flash[:success] = "Purchase Order has successfully Received. Received Equipments are now in the inventory."
-      redirect_to assigns_path
+      redirect_to inventories_path
     else
       render 'new'
     end

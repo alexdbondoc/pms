@@ -60,8 +60,12 @@
               <td>
                 <center>
                   <strong>
-                    <%= invent.receive.order.order_lines[i].consolidate.consolidate_lines[i].request.user.empname %>
-                    <%= al.hidden_field(:user_id, value: invent.receive.order.order_lines[i].consolidate.consolidate_lines[i].request.user_id) %>
+                    <%invent.receive.order.order_lines[i].consolidate.consolidate_lines.each do |cl|%>
+                      <%if cl.type_id == invent.type_id && cl.product_id == invent.product_id && cl.unit_id == invent.unit_id%>
+                          <%= cl.request.user.empname %>
+                          <%= al.hidden_field(:user_id, value: cl.request.user_id) %>
+                      <%end%>
+                    <%end%>
                   </strong>
                 </center>
               </td>

@@ -4,15 +4,15 @@ class ConsolidatesController < ApplicationController
 	def index
 		sleep 1
 		if current_user.designation.name == "Group Head"
-			@consolidates = Consolidate.joins(user: [{department: :group}]).where("groups.id" => current_user.department.group.id).order("created_at DESC").paginate(page: params[:page], per_page: 5)
+			@consolidates = Consolidate.joins(user: [{department: :group}]).where("groups.id" => current_user.department.group.id).order("created_at DESC").paginate(page: params[:page], per_page: 25)
 		elsif current_user.designation.name == "Department Head" && current_user.department.name == "Information and Communication Technology"
-			@consolidates = Consolidate.joins(:category).where("categories.name" => "IT Equipment").order("created_at DESC").paginate(page: params[:page], per_page: 5)
+			@consolidates = Consolidate.joins(:category).where("categories.name" => "IT Equipment").order("created_at DESC").paginate(page: params[:page], per_page: 25)
 		elsif current_user.designation.name == "Department Head" && current_user.department.name == "Property and Procurement"
-			@consolidates = Consolidate.order("created_at DESC").paginate(page: params[:page], per_page: 5)
+			@consolidates = Consolidate.order("created_at DESC").paginate(page: params[:page], per_page: 25)
 		elsif current_user.designation.name == "System Admin"
-			@consolidates = Consolidate.all.order("created_at DESC").paginate(page: params[:page], per_page: 5)
+			@consolidates = Consolidate.all.order("created_at DESC").paginate(page: params[:page], per_page: 25)
 		else
-			@consolidates = Consolidate.where(:user_id => current_user.id).order("created_at DESC").paginate(page: params[:page], per_page: 5)
+			@consolidates = Consolidate.where(:user_id => current_user.id).order("created_at DESC").paginate(page: params[:page], per_page: 25)
 		end
 	end
 

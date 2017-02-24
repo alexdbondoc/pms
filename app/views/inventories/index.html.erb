@@ -27,7 +27,11 @@
             </td>
             <td><center><strong><%= pluralize(inventory.qty, "#{inventory.unit.name}") %></strong></center></td>
             <td><center><strong><%= inventory.updated_at.to_date.to_formatted_s(:rfc822) %></strong></center></td>
-            <td><center><strong><%= inventory.assign_line.user.empname %></strong></center></td>
+            <td>
+              <%if inventory.assign_line != nil%>
+                <center><strong><%= inventory.assign_line.user.empname %></strong></center>
+              <%end%>
+            </td>
             <td><center><strong><%= inventory.status %></strong></center></td>
             <%if inventory.status == "Received" && inventory.status == "Transfered" %>
             <td>

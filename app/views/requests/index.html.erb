@@ -6,7 +6,9 @@
   <table class="table">
     <thead>
       <tr>
-        <td colspan="12" align="center"><%= will_paginate %></td>
+        <td colspan="12" align="center">
+          
+        </td>
       </tr>
       <th></th>
       <th><center>Request <br> Number</center></th>
@@ -65,7 +67,7 @@
             <td align="center"><%= req.RISNum %></td>
             <td align="center"><%= req.category.name %></td>
             <td align="center"><%= req.user.empname %></td>
-            <td align="center"><%= req.date_created.to_formatted_s(:long) %></td>
+            <td align="center"><%= req.date_created.to_date.to_formatted_s(:rfc822) %></td>
             <td align="center"><%= req.department.name %></td>
             <td align="center">
               <%@current_officer.each do |officer|%>
@@ -78,7 +80,7 @@
               <%= link_to "View", request_path(req),
                     data: {confirm: "Are you sure you want to view this request?"}, 
                       class: "btn btn-xs btn-success" %>
-            <% if req.status == "Pending" %>
+            <% if req.status == "Pending" && req.user_id == current_user.id %>
                 <%= link_to "Update", edit_request_path(req), 
                                   data: {confirm: "Are you sure you want to update this request?"}, 
                                     class: "btn btn-xs btn-primary" %>

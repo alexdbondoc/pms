@@ -21,6 +21,8 @@ gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.43'
 gem "bootstrap-table-rails"
 gem 'sass-rails', '~> 5.0'
+gem 'sunspot_rails'
+gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views

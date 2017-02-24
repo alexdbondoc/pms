@@ -5,8 +5,12 @@
   <!-- Table -->
   <table class="table">
   	<thead>
+	      <tr>
+	        <td colspan="12" align="center">
+	        	
+	        </td>
+	      </tr>
   		<tr>
-        <td><%= will_paginate %></td></tr>
 	    <th></th>
 	    <th><center>Request <br> Number</center></th>
 	    <th><center>Request <br> Type</center></th>
@@ -79,7 +83,7 @@
 				<td><center><strong><%= cons.ConsNum %></strong></center></td>
 				<td><center><strong><%= cons.category.name %></strong></center></td>
 		  		<td><center><strong><%= cons.user.empname%></strong></center></td>
-				<td><center><strong><%= cons.created_at.to_date.to_formatted_s(:long)%></strong></center></td>
+				<td><center><strong><%= cons.created_at.to_date.to_formatted_s(:rfc822)%></strong></center></td>
 	  			<td><center><strong><%= cons.department.name%></strong></center></td>
 	  			<%if cons.inspected_by != nil%>
 		  			<% @inspector = User.where("id" => cons.inspected_by) %>
@@ -117,5 +121,11 @@
   			</tr>
   		<%end%>
   	</tbody>
+  	<tfoot>
+  		
+      <tr>
+        <td colspan="12" align="center"><%= will_paginate %></td>
+      </tr>
+  	</tfoot>
   </table>
  </div>
