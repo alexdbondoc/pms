@@ -6,8 +6,14 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    sleep 1
-    @orders = Order.order("created_at DESC").paginate(page: params[:page], per_page: 5)
+    # @orders = Order.order("created_at DESC").paginate(page: params[:page], per_page: 5)
+    @search = Order.paginate(page: params[:page], per_page: 25).search do
+        fulltext params[:search] if params[:search].present?
+        with(:created_at, params[:date_from]..params[:date_to]) if params[:date_from].present? && params[:date_to].present?
+        with(:delivery_date, params[:delivery_date]) if params[:delivery_date].present?
+        order_by(:created_at, :desc)
+      end
+      @orders = @search.results
   end
 
   # GET /orders/1
@@ -18,7 +24,6 @@ class OrdersController < ApplicationController
   # GET /orders/new
   # inputChangeSelector
   def new
-    sleep 1
     @time = Time.now 
     @order = Order.new
     @cons_ids = params[:cons_ids]
@@ -41,7 +46,6 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    sleep 1
     @supp = Supplier.all
     i = 0
     @supp_add = Array.new(@supp.length)

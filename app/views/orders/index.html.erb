@@ -5,7 +5,22 @@
   <!-- Table -->
   <table class="table">
     <thead>
-      <tr><td colspan="12" align="center"><%= will_paginate %></td></tr>
+      <tr>
+        <td colspan="12" align="center">
+          <%= form_tag orders_path, :method => :get do%>
+            <center>
+              <%= text_field_tag :search, params[:search]%>
+              <strong>Delivery Date:</strong>
+              <%= date_field_tag :delivery_date, nil%>
+              <strong>Date From:</strong>
+              <%= date_field_tag :date_from, nil%>
+              <strong>Date To:</strong>
+              <%= date_field_tag :date_to, nil%>
+              <%= submit_tag "Search",:name => :asd  %>
+            </center>
+          <%end%>
+        </td>
+      </tr>
       <th></th>
       <th><center>PO<br>Number</center></th>
       <th><center>Created<br>By</center></th>
@@ -90,5 +105,8 @@
         </tr>
       <%end%>
     </tbody>
+    <tfoot>
+      <td colspan="12" align="center"><%= will_paginate %></td>
+    </tfoot>
   </table>
  </div>

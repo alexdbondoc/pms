@@ -1,19 +1,26 @@
 class ConsolidatesController < ApplicationController
 	before_action :require_user
-	before_action :require_department_head
 	def index
-		sleep 1
-		if current_user.designation.name == "Group Head"
-			@consolidates = Consolidate.joins(user: [{department: :group}]).where("groups.id" => current_user.department.group.id).order("created_at DESC").paginate(page: params[:page], per_page: 25)
-		elsif current_user.designation.name == "Department Head" && current_user.department.name == "Information and Communication Technology"
-			@consolidates = Consolidate.joins(:category).where("categories.name" => "IT Equipment").order("created_at DESC").paginate(page: params[:page], per_page: 25)
-		elsif current_user.designation.name == "Department Head" && current_user.department.name == "Property and Procurement"
-			@consolidates = Consolidate.order("created_at DESC").paginate(page: params[:page], per_page: 25)
-		elsif current_user.designation.name == "System Admin"
-			@consolidates = Consolidate.all.order("created_at DESC").paginate(page: params[:page], per_page: 25)
-		else
-			@consolidates = Consolidate.where(:user_id => current_user.id).order("created_at DESC").paginate(page: params[:page], per_page: 25)
-		end
+		# if current_user.designation.name == "Group Head"
+		# 	@consolidates = Consolidate.joins(user: [{department: :group}]).where("groups.id" => current_user.department.group.id).order("created_at DESC").paginate(page: params[:page], per_page: 25)
+		# elsif current_user.department.name == "Information and Communication Technology"
+		# 	@consolidates = Consolidate.joins(:category).where("categories.name" => "IT Equipment").order("created_at DESC").paginate(page: params[:page], per_page: 25)
+		# elsif current_user.department.name == "Property and Procurement"
+		# 	@consolidates = Consolidate.order("created_at DESC").paginate(page: params[:page], per_page: 25)
+		# elsif current_user.designation.name == "System Admin"
+		# 	@consolidates = Consolidate.all.order("created_at DESC").paginate(page: params[:page], per_page: 25)
+		# else
+		# 	@consolidates = Consolidate.where(:user_id => current_user.id).order("created_at DESC").paginate(page: params[:page], per_page: 25)
+		# end
+		@search = Consolidate.paginate(page: params[:page], per_page: 25).search do
+	    	fulltext params[:search] if params[:search].present?
+	    	with(:created_at, params[:date_from]..params[:date_to]) if params[:date_from].present? && params[:date_to].present?
+	    	with(:user_id, current_user.id) if current_user.designation.name == "Department Head" && current_user.department.name != "Information and Communication Technology" && current_user.department.name != "Property and Procurement"
+	    	with(:officer_id, current_user.id) if current_user.designation.name == "Group Head"
+	    	with(:inspected_by, current_user.id) if current_user.department.name == "Information and Communication Technology"
+	        order_by(:created_at, :desc)
+	    end
+	    @consolidates = @search.results
 	end
 
 	def new

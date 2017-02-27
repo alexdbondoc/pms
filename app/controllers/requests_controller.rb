@@ -3,12 +3,18 @@ class RequestsController < ApplicationController
   before_action :require_user
 	#before_action :require_admin, except: [:index, :show]
 	def index
-    sleep 1
-    if current_user.designation.name == "Department Head"
-      @requests = Request.where(:department_id => current_user.department_id).order("date_created DESC").paginate(page: params[:page], per_page: 25)
-    else
-      @requests = Request.where(:user_id => current_user.id).order("date_created DESC").paginate(page: params[:page], per_page: 25)
+    # if current_user.designation.name == "Department Head"
+    #   @requests = Request.where(:department_id => current_user.department_id).order("date_created DESC").paginate(page: params[:page], per_page: 25)
+    # else
+    #   @requests = Request.where(:user_id => current_user.id).order("date_created DESC").paginate(page: params[:page], per_page: 25)
+    # end
+    @search = Request.paginate(page: params[:page], per_page: 25).search do
+      fulltext params[:search] if params[:search].present?
+        with(:date_created, params[:date_from]..params[:date_to]) if params[:date_from].present? && params[:date_to].present?
+        with(:department_id, current_user.department_id) if current_user.department_id.present?
+        order_by(:date_created, :desc)
     end
+    @requests = @search.results
     @current_officer = User.joins(:designation).where("department_id = #{current_user.department.id} AND designations.name = 'Department Head'")
 	end
   

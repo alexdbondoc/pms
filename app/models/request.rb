@@ -8,7 +8,15 @@ class Request < ApplicationRecord
 	validates :reason, presence: true, length: { minimum: 15, maximum: 150}	
 
 	searchable do 
-		text :RISNumber, :user
+		text :RISNum, :boost => 5
+		text :user do
+	      user.empname
+	    end
+		text :category do
+	      category.name
+	    end
+	    integer :department_id
+	    text :status, :reason
+	    time :date_created
 	end
-
 end
